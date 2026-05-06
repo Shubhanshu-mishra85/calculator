@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kali005 Fullscreen Calculator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Orbitron',sans-serif;
+}
+
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+    position:relative;
+}
+
+/* ===== FULLSCREEN KALI BACKGROUND ===== */
+
+body::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:
+    linear-gradient(rgba(0,0,0,0.75),
+    rgba(0,0,0,0.85)),
+    url('https://wallpapercave.com/wp/wp8816338.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    filter:blur(2px);
+    transform:scale(1.05);
+}
+
+/* ===== CYBER GLOW ===== */
+
+.glow1,
+.glow2{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+}
+
+.glow1{
+    width:500px;
+    height:500px;
+    background:#00d9ff40;
+    top:-120px;
+    left:-120px;
+}
+
+.glow2{
+    width:450px;
+    height:450px;
+    background:#22c55e40;
+    bottom:-100px;
+    right:-100px;
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+.wrapper{
+    position:relative;
+    width:95%;
+    max-width:1600px;
+    height:92vh;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:50px;
+    border-radius:40px;
+
+    background:rgba(15,23,42,0.45);
+
+    backdrop-filter:blur(25px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,0.6),
+    inset 0 0 1px rgba(255,255,255,0.2);
+}
+
+/* ===== LEFT SIDE ===== */
+
+.left{
+    width:50%;
+    color:white;
+}
+
+.logo{
+    width:170px;
+    margin-bottom:25px;
+
+    filter:drop-shadow(0 0 20px #00d9ff);
+}
+
+.title{
+    font-size:70px;
+    font-weight:700;
+    line-height:1.1;
+
+    background:linear-gradient(90deg,#00d9ff,#22c55e);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    margin-top:25px;
+    font-size:20px;
+    color:#94a3b8;
+    line-height:1.7;
+    max-width:650px;
+}
+
+/* ===== CALCULATOR ===== */
+
+.calculator{
+    width:420px;
+    padding:30px;
+    border-radius:35px;
+
+    background:rgba(0,0,0,0.45);
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* ===== DISPLAY ===== */
+
+.display{
+    width:100%;
+    height:130px;
+
+    background:transparent;
+
+    border:none;
+    outline:none;
+
+    color:white;
+
+    text-align:right;
+
+    font-size:65px;
+
+    padding:20px;
+
+    margin-bottom:25px;
+}
+
+/* ===== BUTTON GRID ===== */
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+/* ===== BUTTON ===== */
+
+button{
+    height:82px;
+
+    border:none;
+
+    border-radius:50%;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+    color:white;
+}
+
+/* Normal */
+
+.btn{
+    background:#111827;
+}
+
+/* Operator */
+
+.operator{
+    background:#00d9ff;
+    color:black;
+}
+
+/* Top */
+
+.top{
+    background:#9ca3af;
+    color:black;
+}
+
+/* Zero */
+
+.zero{
+    grid-column:span 2;
+    border-radius:50px;
+    text-align:left;
+    padding-left:32px;
+}
+
+/* Hover */
+
+button:hover{
+    transform:scale(1.08);
+    filter:brightness(1.15);
+
+    box-shadow:0 0 20px rgba(0,217,255,0.4);
+}
+
+/* Active */
+
+button:active{
+    transform:scale(0.95);
+}
+
+/* Footer */
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:#64748b;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:1100px){
+
+    .wrapper{
+        flex-direction:column;
+        justify-content:center;
+        gap:40px;
+        overflow:auto;
+    }
+
+    .left{
+        width:100%;
+        text-align:center;
+    }
+
+    .subtitle{
+        margin:auto;
+        margin-top:20px;
+    }
+}
+
+@media(max-width:600px){
+
+    .calculator{
+        width:100%;
+    }
+
+    .title{
+        font-size:45px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- GLOW -->
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- MAIN -->
+<div class="wrapper">
+
+    <!-- LEFT -->
+    <div class="left">
+
+        <img
+        class="logo"
+        src="https://www.kali.org/images/kali-logo.svg">
+
+        <div class="title">
+            Kali005<br>
+            Calculator
+        </div>
+
+        <div class="subtitle">
+
+    Hey, I'm Kali005 👨‍💻<br><br>
+
+    Passionate Web Developer & Cyber Tech Enthusiast
+    who loves creating futuristic websites,
+    premium UI designs, and advanced projects.
+
+    I enjoy building modern interfaces inspired by
+    Kali Linux aesthetics, iPhone-style smoothness,
+    and next-generation animations 🚀
+
+    Welcome to my cyber world ✨
+
+</div>
+
+    </div>
+
+    <!-- RIGHT CALCULATOR -->
+    <div class="calculator">
+
+        <!-- DISPLAY -->
+        <input type="text"
+        class="display"
+        id="display"
+        value="0"
+        readonly>
+
+        <!-- BUTTONS -->
+        <div class="buttons">
+
+            <button class="top"
+            onclick="clearDisplay()">AC</button>
+
+            <button class="top"
+            onclick="append('%')">%</button>
+
+            <button class="top"
+            onclick="removeLast()">⌫</button>
+
+            <button class="operator"
+            onclick="append('/')">÷</button>
+
+            <button class="btn"
+            onclick="append('7')">7</button>
+
+            <button class="btn"
+            onclick="append('8')">8</button>
+
+            <button class="btn"
+            onclick="append('9')">9</button>
+
+            <button class="operator"
+            onclick="append('*')">×</button>
+
+            <button class="btn"
+            onclick="append('4')">4</button>
+
+            <button class="btn"
+            onclick="append('5')">5</button>
+
+            <button class="btn"
+            onclick="append('6')">6</button>
+
+            <button class="operator"
+            onclick="append('-')">−</button>
+
+            <button class="btn"
+            onclick="append('1')">1</button>
+
+            <button class="btn"
+            onclick="append('2')">2</button>
+
+            <button class="btn"
+            onclick="append('3')">3</button>
+
+            <button class="operator"
+            onclick="append('+')">+</button>
+
+            <button class="btn zero"
+            onclick="append('0')">0</button>
+
+            <button class="btn"
+            onclick="append('.')">.</button>
+
+            <button class="operator"
+            onclick="calculate()">=</button>
+
+        </div>
+
+        <div class="footer">
+            KALI005 • SHUBHANSHU MISHRA
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* DISPLAY */
+
+let display =
+document.getElementById("display");
+
+/* APPEND */
+
+function append(value){
+
+    if(display.value === "0"){
+
+        display.value = value;
+
+    }else{
+
+        display.value += value;
+    }
+}
+
+/* CLEAR */
+
+function clearDisplay(){
+
+    display.value = "0";
+}
+
+/* REMOVE */
+
+function removeLast(){
+
+    display.value =
+    display.value.slice(0,-1);
+
+    if(display.value === ""){
+
+        display.value = "0";
+    }
+}
+
+/* CALCULATE */
+
+function calculate(){
+
+    try{
+
+        display.value =
+        eval(display.value);
+
+    }catch{
+
+        display.value = "Error";
+    }
+}
+
+/* KEYBOARD SUPPORT */
+
+document.addEventListener("keydown",(e)=>{
+
+    let key = e.key;
+
+    if(!isNaN(key) ||
+    ['+','-','*','/','.','%']
+    .includes(key)){
+
+        append(key);
+    }
+
+    if(key === "Enter"){
+
+        calculate();
+    }
+
+    if(key === "Backspace"){
+
+        removeLast();
+    }
+
+    if(key === "Escape"){
+
+        clearDisplay();
+    }
+});
+
+</script>
+
+</body>
+</html>
